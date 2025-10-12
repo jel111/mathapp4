@@ -54,7 +54,7 @@ const App: React.FC = () => {
       case GameState.TopicSelection:
         return <TopicSelectionScreen onTopicSelect={handleTopicSelect} />;
       case GameState.StatisticsLesson:
-        return <StatisticsLesson onStartQuiz={() => startQuiz('statistics')} />;
+        return <StatisticsLesson onStartQuiz={() => startQuiz('statistics')} onBack={handleReturnToMenu} />;
       case GameState.Finished:
         return <EndScreen score={score} totalQuestions={TOTAL_QUESTIONS} onReturnToMenu={handleReturnToMenu} />;
       case GameState.Playing:
@@ -62,8 +62,17 @@ const App: React.FC = () => {
         return (
           <div className="w-full px-4 flex flex-col items-center gap-6">
             <div className="w-full max-w-3xl flex justify-between items-center text-white font-bold text-2xl">
-                <span>Score: {score}</span>
-                <span>{currentQuestionIndex + 1} / {TOTAL_QUESTIONS}</span>
+                <button
+                    onClick={handleReturnToMenu}
+                    className="px-4 py-2 bg-slate-700 text-slate-200 font-semibold text-lg rounded-lg shadow-md hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-pink-400 transform hover:scale-105 transition-all duration-300"
+                    aria-label="Return to main menu"
+                >
+                    &larr; Menu
+                </button>
+                <div className="text-right">
+                    <span className="block">Score: {score}</span>
+                    <span className="block text-lg opacity-75">{currentQuestionIndex + 1} / {TOTAL_QUESTIONS}</span>
+                </div>
             </div>
             <QuestionCard 
               question={questions[currentQuestionIndex]} 
